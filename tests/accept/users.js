@@ -56,7 +56,6 @@ describe('Users', function() {
           chai.request(url)
             .get(res.header.location)
             .end(function(err, userRes) {
-              //console.log(userRes);
               userRes.should.have.status(200);
               expect(userRes.body).to.be.a('object');
               expect(userRes.body.name.first).to.be.a('string');
@@ -80,6 +79,30 @@ describe('Users', function() {
             expect(res.body).to.be.a('object');
             expect(res.body.name.first).to.be.a('string');
             done();
+          });
+      });
+    });
+  });
+
+  describe('/PUT users/:id', function() {
+    it('should update a single user', function(done) {
+      // Find a user in the DB
+      User.findOne({}, function(err, user) {
+        var id = user._id;
+
+        user.name.first = 'testing';
+
+        // Update this user by id
+        chai.request(url)
+          .put('/users/' + id)
+          .send(user)
+          .end(function(err, res) {
+            res.should.have.status(200);
+
+            User.findById(id, function(err, user) {
+              expect(user.name.first).to.be.equal('testing');
+              done();
+            });
           });
       });
     });
