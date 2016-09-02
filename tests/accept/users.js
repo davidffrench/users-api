@@ -40,6 +40,34 @@ describe('Users', function() {
     });
   });
 
+  describe('/POST users', function() {
+    it('should create a single user', function(done) {
+      // Find a user in the DB
+      User.findOne({}, function(err, user) {
+        delete user._id;
+
+        // Create a new user
+        chai.request(url)
+          .post('/users')
+          .send(user)
+          .end(function(err, res) {
+            res.should.have.status(201);
+            expect(res.header.location).to.be.a('string');
+
+            // Get the new user by id
+            chai.request(url)
+              .get(res.header.location)
+              .end(function(err, res) {
+                res.should.have.status(200);
+                expect(res.body).to.be.a('object');
+                expect(res.body.name.first).to.be.a('string');
+                done();
+              });
+          });
+      });
+    });
+  });
+
   describe('/GET users/:id', function() {
     it('should return a single user', function(done) {
       // Find a user in the DB
@@ -65,7 +93,7 @@ describe('Users', function() {
       User.findOne({}, function(err, user) {
         var id = user._id;
 
-        // Read this user by id
+        // Delete this user by id
         chai.request(url)
           .delete('/users/' + id)
           .end(function(err, res) {
