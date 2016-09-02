@@ -99,8 +99,8 @@ describe('Users', function() {
           .end(function(err, res) {
             res.should.have.status(200);
 
-            User.findById(id, function(err, user) {
-              expect(user.name.first).to.be.equal('testing');
+            User.findById(id, function(err, updatedUser) {
+              expect(updatedUser.name.first).to.be.equal('testing');
               done();
             });
           });

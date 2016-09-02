@@ -27,10 +27,6 @@ router.post('/', function(req, res) {
       });
     }
 
-    if (!user) {
-      return res.status(404).end();
-    }
-
     res.location('/users/' + user._id);
     res.sendStatus(201);
   });
@@ -56,6 +52,22 @@ router.get('/:id', function(req, res) {
   });
 });
 
+// PUT /users/:id
+// Update a user by ID
+router.put('/:id', function(req, res) {
+  User.findOneAndUpdate({
+    _id: req.params.id
+  }, req.body , function(err, user) {
+    if (err) {
+      return res.status(500).json({
+        error: "Error updating user: " + err
+      });
+    }
+
+    res.sendStatus(200);
+  });
+});
+
 // DELETE /users/:id
 // Delete a user by ID
 router.delete('/:id', function(req, res) {
@@ -64,7 +76,7 @@ router.delete('/:id', function(req, res) {
   }, function(err) {
     if (err) {
       return res.status(500).json({
-        error: "Error reading user: " + err
+        error: "Error deleting user: " + err
       });
     }
 
