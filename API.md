@@ -97,12 +97,17 @@ Returns a list of Users
 
 * **Error Response:**
 
-* **Code:** 500 INTERNAL SERVER ERROR <br />
-  **Content:**
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:**
 
-  ```javascript
-  { "error": "Error listing users" }
-  ```
+    ```javascript
+    { "error": "Error listing users" }
+    ```
+
+  OR
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** None
 
 * **Sample Call:**
 
@@ -111,6 +116,111 @@ Returns a list of Users
     url: "/users",
     dataType: "json",
     type : "GET",
+    success : function(r) {
+      console.log(r);
+    }
+  });
+  ```
+
+**Create User**
+----
+Creates a new User
+
+* **URL**
+
+  `/users`
+
+* **Method:**
+
+  `POST`
+
+*  **URL Params**
+
+  None
+
+* **Data Params**
+
+  ```javascript
+  {
+    "gender": "female",
+    "name": {
+      "title": "ms",
+      "first": "olivia",
+      "last": "young"
+    },
+    "location": {
+      "street": "1119 grove road",
+      "city": "Mountmellick",
+      "state": "rhode island",
+      "zip": 88061
+    },
+    "email": "olivia.young@example.com",
+    "username": "crazykoala938",
+    "password": "malibu",
+    "registered": 1411100094,
+    "dob": 818810543,
+    "phone": "011-475-1126",
+    "cell": "081-725-2254",
+    "PPS": "4335321T",
+    "picture": {
+      "large": "https://randomuser.me/api/portraits/women/20.jpg",
+      "medium": "https://randomuser.me/api/portraits/med/women/20.jpg",
+      "thumbnail": "https://randomuser.me/api/portraits/thumb/women/20.jpg"
+    }
+  }
+  ```
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** None <br />
+    **Headers:** 
+      * **Location:** /users/57b330de848a005e48f5de95
+
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:**
+
+    ```javascript
+    { "error": "Error creating user" }
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+  var data = {
+    "gender": "female",
+    "name": {
+      "title": "ms",
+      "first": "olivia",
+      "last": "young"
+    },
+    "location": {
+      "street": "1119 grove road",
+      "city": "Mountmellick",
+      "state": "rhode island",
+      "zip": 88061
+    },
+    "email": "olivia.young@example.com",
+    "username": "crazykoala938",
+    "password": "malibu",
+    "registered": 1411100094,
+    "dob": 818810543,
+    "phone": "011-475-1126",
+    "cell": "081-725-2254",
+    "PPS": "4335321T",
+    "picture": {
+      "large": "https://randomuser.me/api/portraits/women/20.jpg",
+      "medium": "https://randomuser.me/api/portraits/med/women/20.jpg",
+      "thumbnail": "https://randomuser.me/api/portraits/thumb/women/20.jpg"
+    }
+  };
+  $.ajax({
+    url: "/users",
+    dataType: "json",
+    type : "POST",
+    data: data,
     success : function(r) {
       console.log(r);
     }
@@ -190,6 +300,11 @@ Returns a list of Users
     { "error": "Error reading user" }
     ```
 
+  OR
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** None
+
 * **Sample Call:**
 
   ```javascript
@@ -197,6 +312,162 @@ Returns a list of Users
     url: "/users/1",
     dataType: "json",
     type : "GET",
+    success : function(r) {
+      console.log(r);
+    }
+  });
+  ```
+
+
+**Update User**
+----
+  Updates a single user.
+
+* **URL**
+
+  `/users/:id`
+
+* **Method:**
+
+  `PUT`
+
+*  **URL Params**
+
+   **Required:**
+
+   `id=[string]`
+
+* **Data Params**
+
+  ```javascript
+  {
+    "gender": "female",
+    "name": {
+      "title": "ms",
+      "first": "olivia",
+      "last": "young"
+    },
+    "location": {
+      "street": "1119 grove road",
+      "city": "Mountmellick",
+      "state": "rhode island",
+      "zip": 88061
+    },
+    "email": "olivia.young@example.com",
+    "username": "crazykoala938",
+    "password": "malibu",
+    "registered": 1411100094,
+    "dob": 818810543,
+    "phone": "011-475-1126",
+    "cell": "081-725-2254",
+    "PPS": "4335321T",
+    "picture": {
+      "large": "https://randomuser.me/api/portraits/women/20.jpg",
+      "medium": "https://randomuser.me/api/portraits/med/women/20.jpg",
+      "thumbnail": "https://randomuser.me/api/portraits/thumb/women/20.jpg"
+    }
+  }
+  ```
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** None
+
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:**
+
+    ```javascript
+    { "error": "Error reading user" }
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+  var data = {
+    "gender": "female",
+    "name": {
+      "title": "ms",
+      "first": "olivia",
+      "last": "young"
+    },
+    "location": {
+      "street": "1119 grove road",
+      "city": "Mountmellick",
+      "state": "rhode island",
+      "zip": 88061
+    },
+    "email": "olivia.young@example.com",
+    "username": "crazykoala938",
+    "password": "malibu",
+    "registered": 1411100094,
+    "dob": 818810543,
+    "phone": "011-475-1126",
+    "cell": "081-725-2254",
+    "PPS": "4335321T",
+    "picture": {
+      "large": "https://randomuser.me/api/portraits/women/20.jpg",
+      "medium": "https://randomuser.me/api/portraits/med/women/20.jpg",
+      "thumbnail": "https://randomuser.me/api/portraits/thumb/women/20.jpg"
+    }
+  };
+  $.ajax({
+    url: "/users/1",
+    dataType: "json",
+    type : "PUT",
+    data: data,
+    success : function(r) {
+      console.log(r);
+    }
+  });
+  ```
+
+
+**Delete User**
+----
+  Deletes a single user.
+
+* **URL**
+
+  `/users/:id`
+
+* **Method:**
+
+  `DELETE`
+
+*  **URL Params**
+
+   **Required:**
+
+   `id=[string]`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** None
+
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:**
+
+    ```javascript
+    { "error": "Error reading user" }
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+  $.ajax({
+    url: "/users/1",
+    dataType: "json",
+    type : "DELETE",
     success : function(r) {
       console.log(r);
     }
