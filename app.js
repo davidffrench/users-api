@@ -6,11 +6,16 @@ var path = require('path');
 var marked = require('marked');
 var fs = require('fs');
 var logger = require('winston');
+var bodyParser = require('body-parser');
 var userController = require('./controllers/users');
 
 var app = express();
 
 // Add middleware
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
