@@ -56,4 +56,20 @@ router.get('/:id', function(req, res) {
   });
 });
 
+// DELETE /users/:id
+// Delete a user by ID
+router.delete('/:id', function(req, res) {
+  User.remove({
+    _id: req.params.id
+  }, function(err) {
+    if (err) {
+      return res.status(500).json({
+        error: "Error reading user: " + err
+      });
+    }
+
+    res.sendStatus(200);
+  });
+});
+
 module.exports = router;

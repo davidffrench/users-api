@@ -97,7 +97,7 @@ describe('Users', function() {
           .end(function(err, res) {
             res.should.have.status(200);
             User.findById(id, function(err, user) {
-              expect(user).to.be.a(null);
+              expect(user).to.be.a('null');
               done();
             });
           });
