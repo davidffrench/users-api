@@ -42,29 +42,27 @@ describe('Users', function() {
 
   describe('/POST users', function() {
     it('should create a single user', function(done) {
-      // Find a user in the DB
-      User.findOne({}, function(err, user) {
-        delete user._id;
+      var user = {"gender":"female","name":{"title":"miss","first":"alison","last":"reid"}};
 
-        // Create a new user
-        chai.request(url)
-          .post('/users')
-          .send(user)
-          .end(function(err, res) {
-            res.should.have.status(201);
-            expect(res.header.location).to.be.a('string');
+      // Create a new user
+      chai.request(url)
+        .post('/users')
+        .send(user)
+        .end(function(err, res) {
+          res.should.have.status(201);
+          expect(res.header.location).to.be.a('string');
 
-            // Get the new user by id
-            chai.request(url)
-              .get(res.header.location)
-              .end(function(err, res) {
-                res.should.have.status(200);
-                expect(res.body).to.be.a('object');
-                expect(res.body.name.first).to.be.a('string');
-                done();
-              });
-          });
-      });
+          // Get the new user by id
+          chai.request(url)
+            .get(res.header.location)
+            .end(function(err, userRes) {
+              //console.log(userRes);
+              userRes.should.have.status(200);
+              expect(userRes.body).to.be.a('object');
+              expect(userRes.body.name.first).to.be.a('string');
+              done();
+            });
+        });
     });
   });
 

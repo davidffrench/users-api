@@ -17,6 +17,25 @@ router.get('/', function(req, res) {
   });
 });
 
+// POST /users
+// Create a new user
+router.post('/', function(req, res) {
+  User.create(req.body, function(err, user) {
+    if (err) {
+      return res.status(500).json({
+        error: "Error creating user: " + err
+      });
+    }
+
+    if (!user) {
+      return res.status(404).end();
+    }
+
+    res.location('/users/' + user._id);
+    res.sendStatus(201);
+  });
+});
+
 // GET /users/:id
 // Get a user by ID
 router.get('/:id', function(req, res) {
