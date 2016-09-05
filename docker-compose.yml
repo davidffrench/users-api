@@ -1,0 +1,29 @@
+version: "2"
+
+networks:
+  usersapp:
+    driver: bridge
+
+services: 
+ web: 
+  build: ./users-frontend
+  ports: 
+   - "8081:8081"
+  networks:
+    - usersapp
+  depends_on:
+   - api
+ api:
+  build: ./users-api
+  ports: 
+   - "8000:8000"
+  networks:
+    - usersapp
+  links: 
+   - mongo
+ mongo: 
+  image: mongo
+  ports: 
+   - "27017:27017"
+  networks:
+    - usersapp
